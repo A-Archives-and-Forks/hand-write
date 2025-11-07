@@ -29,10 +29,10 @@
 
 首先需要创建Python虚拟环境，避免本项目与全局环境相互污染。
 
-在本文件夹右键打开终端（或者在终端切换至本目录），构建虚拟环境。
+在本文件夹右键打开终端（或者在终端切换至本目录），构建虚拟环境（Windows，绑定 Python 3.12）。
 
 ```powershell
-python3 -m venv .venv
+py -3.12 -m venv .venv
 ```
 
 激活虚拟环境
@@ -40,17 +40,68 @@ python3 -m venv .venv
 .venv\Scripts\activate
 ```
 
-激活后，你的终端提示符会显示虚拟环境的名称。创建完成后，从requirements.txt中安装所需包
+激活后，你的终端提示符会显示虚拟环境的名称。建议先升级 pip 再安装依赖：
 
 ```powershell
-pip install -r requirements.txt
+.venv\Scripts\python.exe -m pip install --upgrade pip
+.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
+
+运行应用（GUI）：
+
+```powershell
+.venv\Scripts\python.exe .\main.py
+```
+
+环境要求：
+
+- Windows 10/11，`Python 3.12+`
+- `pip 25+`
+- 项目依赖见 `requirements.txt`（已适配 `PySide6 6.7.2` 与 `Python 3.12`）
 
 修改完以后打包（虚拟环境中）
 
 ```powershell
-pyinstaller -F main.py --windowed -i "ui/3d.ico" --add-data "ui/night.png:ui" -n "手写模拟"
+pyinstaller -F main.py --windowed -i "assets/ui/3d.ico" --add-data "assets/ui/night.png:assets/ui" -n "手写模拟"
 ```
+
+## 项目结构
+
+```text
+hand-write/
+├── .github/
+│   └── workflows/
+│       └── release.yml
+├── .vscode/
+│   └── launch.json
+├── assets/
+│   ├── qt界面.png            # 文档截图
+│   ├── 效果.png              # 文档截图
+│   └── ui/                   # 应用运行所需的 UI 资源
+│       ├── 3d.ico
+│       └── night.png
+├── background/
+│   └── white-A4.jpeg         # 示例背景（可替换）
+├── Fonts/                    # 示例字体集合
+├── output/                   # 导出结果目录（运行时自动创建）
+├── LICENSE
+├── README.md
+├── main.py                   # 程序入口
+├── ui.py                     # Qt UI 描述
+├── requirements.txt
+└── 预设.txt                   # 预设参数示例
+```
+
+约定与规范：
+
+- Python 文件使用 `snake_case` 命名。
+- 注释采用 NumPy 风格（模块、函数/方法均添加说明）。
+- 使用虚拟环境进行依赖管理，依赖固定在 `requirements.txt`。
+- Markdown 文档遵循规范，避免 MD040（代码块需声明语言）、MD032（列表需空行包裹）。
+
+## 仓库链接
+
+个人 GitHub 仓库：https://github.com/qingxuandaoming/
 
 ## 路线图
 

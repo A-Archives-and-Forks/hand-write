@@ -17,14 +17,14 @@ jobs:
     - name: Install PyInstaller
       run: pip install pyinstaller
     - name: Build EXE with PyInstaller
-      run: pyinstaller -F main.py --windowed -i "ui/3d.ico" --add-data "ui/night.png:ui" -n "手写模拟"
+      run: pyinstaller -F main.py --windowed -i "assets/ui/3d.ico" --add-data "assets/ui/night.png:assets/ui" -n "手写模拟"
 
     # 打包EXE和UI文件夹为ZIP
-    - name: Package EXE and UI folder
+    - name: Package EXE and assets/ui folder
       run: |
-        Copy-Item -Path "ui" -Destination "dist" -Recurse
+        Copy-Item -Path "assets/ui" -Destination "dist" -Recurse
         cd dist
-        7z a ./release_package.zip 手写模拟.exe ui # 修正路径和假设ui已复制到dist中
+        7z a ./release_package.zip 手写模拟.exe ui # 将资源一并打包
 
    
     # 创建GitHub Release并上传ZIP文件
